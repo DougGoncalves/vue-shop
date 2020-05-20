@@ -98,7 +98,7 @@
 <script src="./main.js" type="text/javascript"></script>
 <script>
 import Hero from '@/components/Hero.vue'
-// import {fb} from '../firebase';
+import { fb } from '../firebase'
 export default {
   name: 'Admin',
   data () {
@@ -113,21 +113,21 @@ export default {
   methods: {
     closeMenu () {
       $('.page-wrapper').toggleClass('toggled')
+    },
+    logout () {
+        fb.auth().signOut()
+          .then(() => {
+              this.$router.replace('/')
+          })
+          .catch((err) =>{
+              console.log(err)
+          });
+    },
+    created(){
+      let user = fb.auth().currentUser
+      this.email = user.email
     }
-    // logout () {
-    //     fb.auth().signOut()
-    //       .then(() => {
-    //           this.$router.replace('/');
-    //       })
-    //       .catch((err) =>{
-    //           console.log(err);
-    //       });
-    //   }
   }
-  // created(){
-  //     let user = fb.auth().currentUser;
-  //     this.email = user.email;
-  // }
 }
 </script>
 
