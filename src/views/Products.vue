@@ -38,7 +38,7 @@
                           {{product.price}}
                         </td>
                         <td>
-                          <button class="btn btn-primary" @click="editProduct(product)">Edit</button>
+                          <button class="btn btn-primary mr-4" @click="editProduct(product)">Edit</button>
                           <button class="btn btn-danger" @click="deleteProduct(product)">Delete</button>
                         </td>
                       </tr>
@@ -140,13 +140,14 @@ export default {
       products: db.collection('products'),
     }
   },
-  methods:{
+ methods:{
     deleteImage(img,index){
       let image = fb.storage().refFromURL(img);
       this.product.images.splice(index,1);
       image.delete().then(function() {
         console.log('image deleted');
       }).catch(function(error) {
+        // Uh-oh, an error occurred!
         console.log('an error occurred');
       });
     },
@@ -156,41 +157,48 @@ export default {
     },
     uploadImage(e){
       if(e.target.files[0]){
-        let file = e.target.files[0];
-        var storageRef = fb.storage().ref('products/'+ Math.random() + '_'  + file.name);
-        let uploadTask  = storageRef.put(file);
-        uploadTask.on('state_changed', (snapshot) => {
 
-        }, (error) => {
-          // Handle unsuccessful uploads
-        }, () => {
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            this.product.images.push(downloadURL);
+          let file = e.target.files[0];
+
+          var storageRef = fb.storage().ref('products/'+ Math.random() + '_'  + file.name);
+
+          let uploadTask  = storageRef.put(file);
+
+          uploadTask.on('state_changed', (snapshot) => {
+
+          }, (error) => {
+            // Handle unsuccessful uploads
+          }, () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              this.product.images.push(downloadURL);
+            });
           });
-        });
       }
     },
     reset(){
       this.product = {
-        name:null,
-        description:null,
-        price:null,
-        tags:[],
-        images:[]
+          name:null,
+          description:null,
+          price:null,
+          tags:[],
+          images:[]
       }
     },
     addNew(){
-      this.modal = 'new';
-      this.reset();
-      $('#product').modal('show');
+        this.modal = 'new';
+        this.reset();
+        $('#product').modal('show');
     },
     updateProduct(){
-      this.$firestore.products.doc(this.product.id).update(this.product);
-        Toast.fire({
-          type: 'success',
-          title: 'Updated  successfully'
-        })
-        $('#product').modal('hide');
+        this.$firestore.products.doc(this.product.id).update(this.product);
+          Toast.fire({
+            type: 'success',
+            title: 'Updated  successfully'
+          })
+           $('#product').modal('hide');
     },
     editProduct(product){
       this.modal = 'edit';
@@ -213,33 +221,28 @@ export default {
             type: 'success',
             title: 'Deleted  successfully'
           })
+
         }
       })
+
     },
     readData(){
+
     },
     addProduct(){
+
       this.$firestore.products.add(this.product);
+
           Toast.fire({
             type: 'success',
             title: 'Product created successfully'
           })
       $('#product').modal('hide');
     }
+
   },
   created(){
-    db().collection("products").onSnapshot(res => {
-      const changes = res.docChanges();
 
-      changes.forEach(change => {
-        if(change.type === 'added'){
-            this.products.unshift({
-              ...change.doc.data(),
-              id:change.doc.id
-           })
-        }
-      })
-    })
   }
 };
 </script>
