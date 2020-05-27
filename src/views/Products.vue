@@ -27,13 +27,11 @@
                       <th>Modify</th>
                     </tr>
                   </thead>
-
                   <tbody>
                       <tr v-for="product in products" :key="product.id">
                         <td>
                           {{product.name}}
                         </td>
-
                         <td>
                           {{product.price}}
                         </td>
@@ -122,25 +120,25 @@ export default {
   },
   data(){
     return {
-      products: [],
-      product: {
-        name:null,
-        description:null,
-        price:null,
-        tags:[],
-        images:[]
-      },
-      activeItem:null,
-      modal: null,
-      tag: null
+        products: [],
+        product: {
+          name:null,
+          description:null,
+          price:null,
+          tags:[],
+          images:[]
+        },
+        activeItem:null,
+        modal: null,
+        tag: null
     }
   },
   firestore(){
-    return {
-      products: db.collection('products'),
-    }
+      return {
+        products: db.collection('products'),
+      }
   },
- methods:{
+  methods:{
     deleteImage(img,index){
       let image = fb.storage().refFromURL(img);
       this.product.images.splice(index,1);
@@ -227,7 +225,6 @@ export default {
 
     },
     readData(){
-
     },
     addProduct(){
 

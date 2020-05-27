@@ -19,8 +19,11 @@ window.Toast = Toast
 window.$ = window.JQuery = JQuery
 Vue.component('Navbar', require('./components/Navbar.vue').default)
 Vue.config.productionTip = false
+Vue.use(VueFirestore, {
+  key: 'id',
+  enumerable: true
+})
 Vue.use(VueFirestore)
-
 const app = ''
 
 fb.auth().onAuthStateChanged(function (user) {

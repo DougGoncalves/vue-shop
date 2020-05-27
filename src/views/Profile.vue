@@ -60,7 +60,7 @@
                       <div class="row">
                         <div class="col-md-">
                             <div class="alert alert-info">
-                              Please use the Reset password email button for reseting the password. The form doens't work currently
+                              Please use the Reset password email button for reseting the password. The form doesn't work currently
                             </div>
                         </div>
                         <div class="col-md-6">

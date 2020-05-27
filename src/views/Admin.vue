@@ -19,8 +19,8 @@
                         <img class="img-responsive img-rounded" src="/img/user.png" alt="User picture">
                     </div>
                     <div class="user-info">
-                        <span class="user-name">Jhon
-                            <strong>Smith</strong>
+                        <span class="user-name">
+                            <strong>John Smith</strong>
                         </span>
                         <span class="user-role"> {{email}} </span>
                         <span class="user-status">
@@ -48,7 +48,6 @@
                         <li class="header-menu">
                             <span>Menu</span>
                         </li>
-
                         <li>
                             <router-link to="/admin/overview">
                                 <i class="fa fa-chart-line"></i>
@@ -67,7 +66,6 @@
                                 <span>Orders</span>
                             </router-link>
                         </li>
-
                         <li>
                             <router-link to="/admin/profile">
                                 <i class="fa fa-user"></i>
@@ -84,7 +82,6 @@
                 </div>
                 <!-- sidebar-menu  -->
             </div>
-
         </nav>
         <!-- sidebar-content  -->
         <main class="page-content">
@@ -97,39 +94,39 @@
 </template>
 <script src="./main.js" type="text/javascript"></script>
 <script>
-import Hero from '@/components/Hero.vue'
-import { fb } from '../firebase'
+// @ is an alias to /src
+import Hero from "@/components/Hero.vue";
+import {fb} from '../firebase';
 export default {
-  name: 'Admin',
-  data () {
-    return {
-      name: null,
-      email: null
-    }
+  name: "admin",
+  data(){
+      return{
+          name:null,
+          email:null,
+      }
   },
   components: {
     Hero
   },
-  methods: {
-    closeMenu () {
-      $('.page-wrapper').toggleClass('toggled')
-    },
-    logout () {
-        fb.auth().signOut()
+  methods:{
+      closeMenu(){
+        $(".page-wrapper").toggleClass("toggled");
+      },
+      logout(){
+          fb.auth().signOut()
           .then(() => {
-              this.$router.replace('/')
+              this.$router.replace('/');
           })
           .catch((err) =>{
-              console.log(err)
+              console.log(err);
           });
-    },
-    created(){
-      let user = fb.auth().currentUser
-      this.email = user.email
-    }
+      }
+  },
+  created(){
+      let user = fb.auth().currentUser;
+      this.email = user.email;
   }
-}
+};
 </script>
-
 <style>
 </style>
