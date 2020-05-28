@@ -48,7 +48,7 @@
 
   </div>
 </template>
-
+<script src="./main.js" type="text/javascript"></script>
 <script>
 export default {
   name: 'Products',
